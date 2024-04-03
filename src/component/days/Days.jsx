@@ -1,18 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 function Days() {
+  const days = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+  const today = new Date().getDay();
+  const [selectedDay, setSelectedDay] = useState(today);
+
+  const getNextFiveDays = () => {
+    let nextFiveDays = [];
+    for (let i = 0; i < 5; i++) {
+      nextFiveDays.push((today + i) % 7);
+    }
+    return nextFiveDays;
+  }
+
   return (
-
     <div className="card-action">
-      <a href="#" style={{fontWeight: "bold"}}>Thursday</a>
-      <a href="#">Friday</a>
-      <a href="#">Saturday</a>
-      <a href="#">Sunday</a>
-      <a href="#">Monday</a>
+      {getNextFiveDays().map((dayIndex, index) => (
+        <a href="#" key={index} style={{fontWeight: selectedDay === dayIndex ? "bold" : "normal"}} onClick={() => setSelectedDay(dayIndex)}>
+          {days[dayIndex]}
+        </a>
+      ))}
     </div>
-
-
-
   )
 }
 
